@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fix Subtitle Frame Rate: 23.976, 24, 25 fps Converter - Free</title>
+<meta name="description" content="Convert SRT or VTT subtitle timing between 23.976, 24 and 25 fps to fix gradual drift. Free, runs in your browser, no upload.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/fix-subtitle-framerate.html">
+<link rel="stylesheet" href="app.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I convert subtitles from 25 fps to 23.976 fps?","acceptedAnswer":{"@type":"Answer","text":"Choose 25 as the source and 23.976 as the target, load your file and download the result. Every timestamp is multiplied by 25 / 23.976 (about 1.0427), so a cue at 1 hour moves to about 1 hour 2 minutes 34 seconds. Nothing is uploaded."}},{"@type":"Question","name":"Why do my subtitles drift gradually instead of being a fixed amount late?","acceptedAnswer":{"@type":"Answer","text":"A constant offset means the subtitles start at the wrong time; use the shifter for that. A delay that grows steadily through the film usually means the subtitles were timed for a video with a different frame rate, which is what this tool corrects. If the drift is not linear, use the two-point sync in the main tool."}},{"@type":"Question","name":"What is PAL speedup?","acceptedAnswer":{"@type":"Answer","text":"Films shot at 24 fps (23.976 fps for NTSC-era material) were often transferred to 25 fps PAL video by playing every frame slightly faster, about 4.2 to 4.3 percent. The film runs shorter and the pitch of the audio rises. Subtitles made for that 25 fps version are therefore too fast for a 23.976 or 24 fps copy, and need stretching by the ratio of the two rates."}},{"@type":"Question","name":"Which direction do I choose?","acceptedAnswer":{"@type":"Answer","text":"Source is the frame rate your subtitles were made for; target is the frame rate of the video you are playing. If the subtitles run ahead and the gap grows, the source rate is probably higher than the video rate. If you are unsure, check the video's frame rate in a media info tool and try the common pairs."}},{"@type":"Question","name":"Does the subtitle file itself contain a frame rate?","acceptedAnswer":{"@type":"Answer","text":"SRT and WebVTT store times in milliseconds, not frames, so the file has no frame rate. That is why the same file can fit one release and drift on another, and why a simple multiplication fixes it."}},{"@type":"Question","name":"Is 23.976 the same as 24?","acceptedAnswer":{"@type":"Answer","text":"No. 23.976 is exactly 24000/1001 (about 23.97602). The difference to 24 is 0.1 percent, roughly 3.6 seconds per hour. It is small but visible in long films. The tool uses the exact fraction for 23.976 and 29.97."}},{"@type":"Question","name":"Does it change the text or formatting?","acceptedAnswer":{"@type":"Answer","text":"No. Only start and end times change. The result is SRT, or WebVTT if you load a VTT file; ASS/SSA files are converted to SRT and lose their styling."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>Fix Subtitle Frame Rate (23.976, 24, 25 fps)</h1>
+  <p class="lead">Subtitles that start in sync and slowly slide out of sync were timed for a different frame rate. Pick the rate they were made for and the rate of your video; every timestamp is rescaled. Runs in your browser; your file is never uploaded. For a fixed offset use the <a href="./">subtitle shifter</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Convert frame rate</h2>
+    <div class="row">
+      <input type="file" id="file" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file">
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+    </div>
+    <div class="row">
+      <label>Subtitles made for <select id="from"><option value="23.976">23.976 fps</option><option value="24">24 fps</option><option value="25">25 fps</option><option value="29.97">29.97 fps</option><option value="30">30 fps</option></select></label>
+      <label>Your video is <select id="to"><option value="23.976">23.976 fps</option><option value="24">24 fps</option><option value="25">25 fps</option><option value="29.97">29.97 fps</option><option value="30">30 fps</option></select></label>
+    </div>
+    <textarea id="input" rows="8" spellcheck="false" placeholder="Paste SRT, WebVTT or ASS here, or choose a file above" aria-label="Input"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="apply">Convert</button>
+      <button type="button" id="download" class="primary">Download</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <textarea id="output" rows="8" readonly spellcheck="false" aria-label="Result"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to fix subtitle frame rate drift</h2>
+    <ol>
+      <li>Load your .srt or .vtt file, or paste the text.</li>
+      <li>Set "Subtitles made for" to the frame rate of the video the subtitles were timed against, and "Your video is" to the frame rate of the file you are watching.</li>
+      <li>Press Convert, check the end of the film, then Download.</li>
+    </ol>
+    <p>New time = old time x source fps / target fps. Common pairs:</p>
+    <table>
+      <thead><tr><th>From</th><th>To</th><th>Factor</th><th>Effect at 1 hour</th></tr></thead>
+      <tbody>
+        <tr><td>25</td><td>23.976</td><td>1.04271</td><td>+2 min 34 s</td></tr>
+        <tr><td>23.976</td><td>25</td><td>0.95904</td><td>-2 min 27 s</td></tr>
+        <tr><td>25</td><td>24</td><td>1.04167</td><td>+2 min 30 s</td></tr>
+        <tr><td>24</td><td>25</td><td>0.96000</td><td>-2 min 24 s</td></tr>
+        <tr><td>23.976</td><td>24</td><td>0.99900</td><td>-3.6 s</td></tr>
+        <tr><td>24</td><td>23.976</td><td>1.00100</td><td>+3.6 s</td></tr>
+      </tbody>
+    </table>
+    <h3>Why 25 fps differs from 23.976 fps</h3>
+    <p>Film is shot at 24 fps and, after NTSC conversion, plays at 23.976. European PAL television ran at 25 fps, so films were often sped up by about 4 percent: the movie is shorter and the sound is slightly higher in pitch. A subtitle file made for such a 25 fps release runs about 4 percent too fast on a 23.976 or 24 fps copy, and the error grows the longer the film plays. Stretching the timestamps by the ratio of the two rates removes it.</p>
+    <p>If the drift is not linear, or the subtitles are also offset at the start, try the two-point sync in the <a href="./">main tool</a>.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>How do I convert subtitles from 25 fps to 23.976 fps?</summary><p>Choose 25 as the source and 23.976 as the target, load your file and download the result. Every timestamp is multiplied by 25 / 23.976 (about 1.0427), so a cue at 1 hour moves to about 1 hour 2 minutes 34 seconds. Nothing is uploaded.</p></details>
+    <details><summary>Why do my subtitles drift gradually instead of being a fixed amount late?</summary><p>A constant offset means the subtitles start at the wrong time; use the shifter for that. A delay that grows steadily through the film usually means the subtitles were timed for a video with a different frame rate, which is what this tool corrects. If the drift is not linear, use the two-point sync in the main tool.</p></details>
+    <details><summary>What is PAL speedup?</summary><p>Films shot at 24 fps (23.976 fps for NTSC-era material) were often transferred to 25 fps PAL video by playing every frame slightly faster, about 4.2 to 4.3 percent. The film runs shorter and the pitch of the audio rises. Subtitles made for that 25 fps version are therefore too fast for a 23.976 or 24 fps copy, and need stretching by the ratio of the two rates.</p></details>
+    <details><summary>Which direction do I choose?</summary><p>Source is the frame rate your subtitles were made for; target is the frame rate of the video you are playing. If the subtitles run ahead and the gap grows, the source rate is probably higher than the video rate. If you are unsure, check the video's frame rate in a media info tool and try the common pairs.</p></details>
+    <details><summary>Does the subtitle file itself contain a frame rate?</summary><p>SRT and WebVTT store times in milliseconds, not frames, so the file has no frame rate. That is why the same file can fit one release and drift on another, and why a simple multiplication fixes it.</p></details>
+    <details><summary>Is 23.976 the same as 24?</summary><p>No. 23.976 is exactly 24000/1001 (about 23.97602). The difference to 24 is 0.1 percent, roughly 3.6 seconds per hour. It is small but visible in long films. The tool uses the exact fraction for 23.976 and 29.97.</p></details>
+    <details><summary>Does it change the text or formatting?</summary><p>No. Only start and end times change. The result is SRT, or WebVTT if you load a VTT file; ASS/SSA files are converted to SRT and lose their styling.</p></details>
+  </section>
+  <section class="prose"><p>Related: <a href="./">Subtitle shifter, framerate and drift fixer</a>, <a href="srt-to-vtt-converter.html">SRT to VTT converter</a>, <a href="remove-sdh-from-subtitles.html">remove SDH tags</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="framerate.js"></script>
+</body>
+</html>

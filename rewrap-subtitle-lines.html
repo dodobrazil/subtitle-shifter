@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Re-wrap Subtitle Lines to Max Length (SRT, VTT) - Free, Private</title>
+<meta name="description" content="Re-wrap SRT or VTT subtitle lines to a maximum length such as 42 characters, balanced over two lines, without breaking words. Free, runs in your browser, no upload.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/rewrap-subtitle-lines.html">
+<link rel="stylesheet" href="app.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I change the line length of an SRT file?", "acceptedAnswer": {"@type": "Answer", "text": "Set the maximum characters per line (42 is the common limit) and press Re-wrap. Each cue's text is joined and broken again at word boundaries so no line goes over the limit."}}, {"@type": "Question", "name": "Why 42 characters per line?", "acceptedAnswer": {"@type": "Answer", "text": "Netflix and most broadcast style guides use 42 characters per line and at most two lines. Some projects use 37 for mobile or 32 for children's content, so the limit is adjustable."}}, {"@type": "Question", "name": "Does it break words in the middle?", "acceptedAnswer": {"@type": "Answer", "text": "No. Lines only break between words. A single word longer than the limit stays on its own line and is reported in the status message."}}, {"@type": "Question", "name": "What about dialogue lines that start with a dash?", "acceptedAnswer": {"@type": "Answer", "text": "If every line of a cue starts with a dash (two speakers), each speaker line is kept separate and only wrapped if it is too long."}}, {"@type": "Question", "name": "Are italic and other tags kept?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. HTML-style tags such as \u003ci> and \u003cb> and ASS codes such as {\\an8} are kept and not counted toward the line length."}}, {"@type": "Question", "name": "Is my file uploaded anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. Everything runs in your browser and the file never leaves your device."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>Re-wrap Subtitle Lines to a Maximum Length</h1>
+  <p class="lead">Fix lines that are too long or badly broken in an SRT or VTT file. Set the limit (42 is standard) and get balanced lines. Runs in your browser; your file is never uploaded. To only check reading speed and line length, use the <a href="subtitle-reading-speed-checker.html">reading speed checker</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Re-wrap subtitles</h2>
+    <div class="row">
+      <label>Max characters per line <input type="number" id="maxChars" value="42" min="10" max="100" step="1" style="width:5em"></label>
+      <label>Max lines <input type="number" id="maxLines" value="2" min="1" max="4" step="1" style="width:4em"></label>
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+    </div>
+    <input type="file" id="file" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file">
+    <textarea id="input" rows="8" spellcheck="false" placeholder="Paste subtitles here, or choose a file above" aria-label="Subtitles"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="apply" class="primary">Re-wrap</button>
+      <button type="button" id="dl">Download</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <textarea id="output" rows="8" readonly spellcheck="false" aria-label="Re-wrapped subtitles"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to fix long subtitle lines</h2>
+    <ol>
+      <li>Load the subtitle file or paste it.</li>
+      <li>Set the maximum characters per line and the maximum number of lines.</li>
+      <li>Press Re-wrap, check the result, and download it.</li>
+    </ol>
+    <p>Example: with a limit of 42, the line <code>I never thought I would see this place again after all these years</code> becomes two balanced lines instead of one long line and a short leftover.</p>
+    <p>Timing is not changed. If a cue still needs more lines than allowed, the status message tells you how many; those usually need to be split in time.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>How do I change the line length of an SRT file?</summary><p>Set the maximum characters per line (42 is the common limit) and press Re-wrap. Each cue's text is joined and broken again at word boundaries so no line goes over the limit.</p></details>
+    <details><summary>Why 42 characters per line?</summary><p>Netflix and most broadcast style guides use 42 characters per line and at most two lines. Some projects use 37 for mobile or 32 for children's content, so the limit is adjustable.</p></details>
+    <details><summary>Does it break words in the middle?</summary><p>No. Lines only break between words. A single word longer than the limit stays on its own line and is reported in the status message.</p></details>
+    <details><summary>What about dialogue lines that start with a dash?</summary><p>If every line of a cue starts with a dash (two speakers), each speaker line is kept separate and only wrapped if it is too long.</p></details>
+    <details><summary>Are italic and other tags kept?</summary><p>Yes. HTML-style tags such as &lt;i&gt; and &lt;b&gt; and ASS codes such as {\an8} are kept and not counted toward the line length.</p></details>
+    <details><summary>Is my file uploaded anywhere?</summary><p>No. Everything runs in your browser and the file never leaves your device.</p></details>
+  </section>
+  <section class="prose"><p>Related: <a href="./">Subtitle shifter, framerate and drift fixer</a>, <a href="subtitle-reading-speed-checker.html">reading speed (CPS) checker</a>, <a href="remove-sdh-from-subtitles.html">remove SDH tags</a>, <a href="split-subtitle-file.html">split a subtitle file</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="wrap.js"></script>
+</body>
+</html>

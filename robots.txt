@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dodobrazil.github.io/subtitle-shifter/sitemap.xml

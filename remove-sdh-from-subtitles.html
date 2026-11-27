@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remove SDH Tags from Subtitles (SRT, VTT) - Free, Private</title>
+<meta name="description" content="Remove [sound descriptions], (laughs), speaker names and music lines from SRT or VTT subtitles. Free, runs in your browser, no upload.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/remove-sdh-from-subtitles.html">
+<link rel="stylesheet" href="app.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I remove [SDH] tags from an SRT file?","acceptedAnswer":{"@type":"Answer","text":"Load the .srt or .vtt file, leave the options ticked and press Download. Text in square brackets and parentheses, speaker labels like JOHN: and music-note lines are removed. Cues that end up empty are dropped and the rest are renumbered. Nothing is uploaded."}},{"@type":"Question","name":"What counts as SDH or hearing-impaired text?","acceptedAnswer":{"@type":"Answer","text":"SDH (subtitles for the deaf and hard of hearing) adds sound descriptions such as [door slams] or (laughs), speaker names in capitals such as ANNA:, and music symbols. The tool targets these patterns only; review the result before using it."}},{"@type":"Question","name":"Will it delete normal dialogue in parentheses?","acceptedAnswer":{"@type":"Answer","text":"It removes all text inside round brackets, so a spoken aside like (really) is also removed. Untick Parentheses if your file uses them for dialogue. Square brackets are almost always sound descriptions."}},{"@type":"Question","name":"Does it change the timing?","acceptedAnswer":{"@type":"Answer","text":"No. Start and end times of every remaining cue stay exactly the same. If you also need to fix sync, use the main subtitle shifter."}},{"@type":"Question","name":"Why was a speaker label not removed?","acceptedAnswer":{"@type":"Answer","text":"Only labels in capital letters followed by a colon at the start of a line are removed (ANNA:, DR. SMITH:). Mixed-case text such as Note: is kept so real dialogue is not damaged."}},{"@type":"Question","name":"Which formats work?","acceptedAnswer":{"@type":"Answer","text":"SRT, WebVTT and ASS/SSA can be loaded. The result is SRT, or WebVTT if you load a VTT file."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>Remove SDH Tags from Subtitles</h1>
+  <p class="lead">Strip hearing-impaired annotations such as [door slams], (laughs), ANNA: speaker labels and music lines from SRT or VTT. Runs in your browser; your file is never uploaded. Need to fix timing too? Use the <a href="./">subtitle shifter</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Clean subtitles</h2>
+    <div class="row">
+      <input type="file" id="file" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file">
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+    </div>
+    <div class="row">
+      <label><input type="checkbox" id="brackets" checked> [Square brackets]</label>
+      <label><input type="checkbox" id="parens" checked> (Parentheses)</label>
+      <label><input type="checkbox" id="speakers" checked> SPEAKER: labels</label>
+      <label><input type="checkbox" id="music" checked> Music lines</label>
+    </div>
+    <textarea id="input" rows="8" spellcheck="false" placeholder="Paste SRT, WebVTT or ASS here, or choose a file above" aria-label="Input"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="clean">Remove SDH</button>
+      <button type="button" id="download" class="primary">Download</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <textarea id="output" rows="8" readonly spellcheck="false" aria-label="Result"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to remove SDH from an SRT file</h2>
+    <ol>
+      <li>Choose your .srt or .vtt file, or paste the text.</li>
+      <li>Keep the four options ticked, or untick the ones you want to keep (for example Parentheses if they hold real dialogue).</li>
+      <li>Press Remove SDH, check the result, then Download.</li>
+    </ol>
+    <p>Example: <code>[door slams]</code> on its own line disappears; <code>ANNA: Hi (laughs)</code> becomes <code>Hi</code>; a cue that contained only <code>[music]</code> is dropped. Timing of the other cues is untouched.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>How do I remove [SDH] tags from an SRT file?</summary><p>Load the .srt or .vtt file, leave the options ticked and press Download. Text in square brackets and parentheses, speaker labels like JOHN: and music-note lines are removed. Cues that end up empty are dropped and the rest are renumbered. Nothing is uploaded.</p></details>
+    <details><summary>What counts as SDH or hearing-impaired text?</summary><p>SDH (subtitles for the deaf and hard of hearing) adds sound descriptions such as [door slams] or (laughs), speaker names in capitals such as ANNA:, and music symbols. The tool targets these patterns only; review the result before using it.</p></details>
+    <details><summary>Will it delete normal dialogue in parentheses?</summary><p>It removes all text inside round brackets, so a spoken aside like (really) is also removed. Untick Parentheses if your file uses them for dialogue. Square brackets are almost always sound descriptions.</p></details>
+    <details><summary>Does it change the timing?</summary><p>No. Start and end times of every remaining cue stay exactly the same. If you also need to fix sync, use the main subtitle shifter.</p></details>
+    <details><summary>Why was a speaker label not removed?</summary><p>Only labels in capital letters followed by a colon at the start of a line are removed (ANNA:, DR. SMITH:). Mixed-case text such as Note: is kept so real dialogue is not damaged.</p></details>
+    <details><summary>Which formats work?</summary><p>SRT, WebVTT and ASS/SSA can be loaded. The result is SRT, or WebVTT if you load a VTT file.</p></details>
+  </section>
+  <section class="prose"><p>Related: <a href="./">Subtitle shifter, framerate and drift fixer</a>, <a href="srt-to-vtt-converter.html">SRT to VTT converter</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="sdh.js"></script>
+</body>
+</html>

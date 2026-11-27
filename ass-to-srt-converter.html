@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASS to SRT Converter (SSA to SRT) - Free, Private, Skip Signs</title>
+<meta name="description" content="Convert ASS or SSA subtitles to SRT in your browser. Keep italics, skip sign and song styles, fix encoding. Free, no upload.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/ass-to-srt-converter.html">
+<link rel="stylesheet" href="app.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I convert ASS to SRT?","acceptedAnswer":{"@type":"Answer","text":"Choose your .ass file or paste its text and press Download. Each dialogue line becomes a numbered SRT cue with its start and end time. Nothing is uploaded."}},{"@type":"Question","name":"What happens to the styling, fonts and colors?","acceptedAnswer":{"@type":"Answer","text":"SRT cannot store fonts, colors, positions or karaoke effects, so they are dropped. Italic and bold can be kept as <i> and <b> tags with the Keep italic and bold option, which most players understand."}},{"@type":"Question","name":"Can I leave out signs and songs?","acceptedAnswer":{"@type":"Answer","text":"Yes. When the file uses more than one style, the tool lists every style with its line count. Styles named like Sign, Song, OP or ED start unticked; tick or untick any style to include or leave out its lines. Drawing-mode lines (vector graphics) are always skipped."}},{"@type":"Question","name":"Does it also convert SSA files?","acceptedAnswer":{"@type":"Answer","text":"Yes. Old SSA files and newer ASS (Advanced SubStation Alpha) files use the same Dialogue lines and are detected automatically."}},{"@type":"Question","name":"Why do accented letters look wrong?","acceptedAnswer":{"@type":"Answer","text":"The file is probably not UTF-8. Pick the matching Encoding (for example windows-1251 for Russian or windows-1254 for Turkish); the SRT is always written as UTF-8."}},{"@type":"Question","name":"Are my files uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. The conversion runs in your browser with JavaScript and your file never leaves your device."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>ASS to SRT Converter</h1>
+  <p class="lead">Convert ASS/SSA subtitles to plain SRT, optionally leaving out sign and song styles. Runs in your browser; your file is never uploaded. Need other formats? See the <a href="srt-to-vtt-converter.html">SRT/VTT converter</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Convert</h2>
+    <div class="row">
+      <input type="file" id="file" accept=".ass,.ssa,.txt,text/plain" aria-label="ASS or SSA file">
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+      <label><input type="checkbox" id="format" checked> Keep italic and bold</label>
+    </div>
+    <textarea id="input" rows="8" spellcheck="false" placeholder="Paste ASS or SSA here, or choose a file above" aria-label="Input"></textarea>
+    <fieldset id="stylesWrap" hidden><legend>Styles to include</legend><div id="styles" class="row"></div></fieldset>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="convert">Convert</button>
+      <button type="button" id="download" class="primary">Download .srt</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <textarea id="output" rows="8" readonly spellcheck="false" aria-label="Result"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to convert ASS to SRT</h2>
+    <ol>
+      <li>Choose your .ass or .ssa file, or paste its text into the box.</li>
+      <li>Pick the Encoding if accented letters look wrong. If the file has several styles, tick the ones you want; signs and songs start unticked.</li>
+      <li>Press Download .srt. The file keeps the original name with the .srt extension.</li>
+    </ol>
+    <p>What changes: ASS stores each line as a <code>Dialogue:</code> entry with style, margins and override tags such as <code>{\an8}</code> or <code>{\i1}</code>. SRT only has a number, a time range and text, so layout and effects are dropped. A <code>\N</code> becomes a line break.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>How do I convert ASS to SRT?</summary><p>Choose your .ass file or paste its text and press Download. Each dialogue line becomes a numbered SRT cue with its start and end time. Nothing is uploaded.</p></details>
+    <details><summary>What happens to the styling, fonts and colors?</summary><p>SRT cannot store fonts, colors, positions or karaoke effects, so they are dropped. Italic and bold can be kept as &lt;i&gt; and &lt;b&gt; tags with the Keep italic and bold option, which most players understand.</p></details>
+    <details><summary>Can I leave out signs and songs?</summary><p>Yes. When the file uses more than one style, the tool lists every style with its line count. Styles named like Sign, Song, OP or ED start unticked; tick or untick any style to include or leave out its lines. Drawing-mode lines (vector graphics) are always skipped.</p></details>
+    <details><summary>Does it also convert SSA files?</summary><p>Yes. Old SSA files and newer ASS (Advanced SubStation Alpha) files use the same Dialogue lines and are detected automatically.</p></details>
+    <details><summary>Why do accented letters look wrong?</summary><p>The file is probably not UTF-8. Pick the matching Encoding (for example windows-1251 for Russian or windows-1254 for Turkish); the SRT is always written as UTF-8.</p></details>
+    <details><summary>Are my files uploaded?</summary><p>No. The conversion runs in your browser with JavaScript and your file never leaves your device.</p></details>
+  </section>
+  <section class="prose"><p>Related: <a href="./">Subtitle shifter, framerate and drift fixer</a>, <a href="srt-to-vtt-converter.html">SRT to VTT converter</a>, <a href="remove-sdh-from-subtitles.html">remove SDH tags</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="ass.js"></script>
+</body>
+</html>

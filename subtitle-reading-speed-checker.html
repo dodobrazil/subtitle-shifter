@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subtitle Reading Speed (CPS) Checker for SRT and VTT - Free, Private</title>
+<meta name="description" content="Check an SRT or VTT file for reading speed (characters per second), line length and cue duration. Adjustable limits, violation table and CSV export. Free, runs in your browser.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/subtitle-reading-speed-checker.html">
+<link rel="stylesheet" href="app.css">
+<style>.tablewrap{overflow-x:auto}table.res{border-collapse:collapse;width:100%;font-size:.9rem}table.res th,table.res td{border-bottom:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}table.res tr.bad td{font-weight:600}.row input[type=number]{width:5.5em}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is CPS in subtitles?","acceptedAnswer":{"@type":"Answer","text":"CPS means characters per second: the number of visible characters in a cue divided by how long it is on screen. It is the usual measure of how fast a viewer has to read."}},{"@type":"Question","name":"What are good CPS, CPL and duration limits?","acceptedAnswer":{"@type":"Answer","text":"The defaults here (17 CPS, 42 characters per line, 0.833 s minimum and 7 s maximum duration) are common guideline values, but limits differ by client, language and audience. Every limit is editable, so enter the numbers from your own style guide."}},{"@type":"Question","name":"How are characters counted?","acceptedAnswer":{"@type":"Answer","text":"Formatting tags such as italic tags and ASS override codes are ignored, spaces and punctuation count, and line breaks do not count. Line length (CPL) is the longest single line in the cue."}},{"@type":"Question","name":"Can I export the results?","acceptedAnswer":{"@type":"Answer","text":"Yes. Download CSV gives one row per cue with timing, characters, CPS, line length and the issues found, ready for a spreadsheet."}},{"@type":"Question","name":"Is my file uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The check runs in your browser and the file never leaves your device."}},{"@type":"Question","name":"Which formats work?","acceptedAnswer":{"@type":"Answer","text":"SRT, WebVTT and ASS/SSA can be loaded."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>Subtitle Reading Speed (CPS) Checker</h1>
+  <p class="lead">Find cues that are too fast to read, have lines that are too long, or stay on screen too briefly or too long. Limits are adjustable. Runs in your browser; your file is never uploaded. To fix timing afterwards, use the <a href="./">subtitle shifter</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Check subtitles</h2>
+    <div class="row">
+      <label>Max CPS <input type="number" id="cps" value="17" min="0" step="0.5"></label>
+      <label>Max characters per line <input type="number" id="cpl" value="42" min="0" step="1"></label>
+      <label>Min duration (s) <input type="number" id="minDur" value="0.833" min="0" step="0.001"></label>
+      <label>Max duration (s) <input type="number" id="maxDur" value="7" min="0" step="0.5"></label>
+      <label>Max lines (0 = off) <input type="number" id="maxLines" value="0" min="0" step="1"></label>
+    </div>
+    <p class="status">Defaults are common guideline values, not an official standard. Set the numbers from your client's style guide. Use 0 to switch a check off.</p>
+    <div class="row">
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+      <label><input type="checkbox" id="onlyIssues" checked> Show only cues with issues</label>
+    </div>
+    <input type="file" id="file" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file">
+    <textarea id="input" rows="6" spellcheck="false" placeholder="Paste subtitles here, or choose a file above" aria-label="Subtitles"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="apply" class="primary">Check</button>
+      <button type="button" id="dl">Download CSV</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <div class="tablewrap">
+      <table class="res">
+        <thead><tr><th>#</th><th>Start</th><th>Dur (s)</th><th>Chars</th><th>CPS</th><th>Longest line</th><th>Issues</th><th>Text</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How reading speed is checked</h2>
+    <ol>
+      <li>Load the subtitle file or paste it, and set your limits.</li>
+      <li>Press Check. Each cue gets characters per second (CPS), its longest line (CPL) and its duration.</li>
+      <li>Fix flagged cues in your editor, or download the CSV to work through them in a spreadsheet.</li>
+    </ol>
+    <p>Example: a 1.0 second cue with 18 visible characters reads at 18 CPS, which is over a 17 CPS limit, so it is flagged. Either lengthen the cue or shorten the text.</p>
+    <p>Formatting tags are ignored, spaces and punctuation count, line breaks do not.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>What is CPS in subtitles?</summary><p>CPS means characters per second: the number of visible characters in a cue divided by how long it is on screen. It is the usual measure of how fast a viewer has to read.</p></details>
+    <details><summary>What are good CPS, CPL and duration limits?</summary><p>The defaults here (17 CPS, 42 characters per line, 0.833 s minimum and 7 s maximum duration) are common guideline values, but limits differ by client, language and audience. Every limit is editable, so enter the numbers from your own style guide.</p></details>
+    <details><summary>How are characters counted?</summary><p>Formatting tags such as italic tags and ASS override codes are ignored, spaces and punctuation count, and line breaks do not count. Line length (CPL) is the longest single line in the cue.</p></details>
+    <details><summary>Can I export the results?</summary><p>Yes. Download CSV gives one row per cue with timing, characters, CPS, line length and the issues found, ready for a spreadsheet.</p></details>
+    <details><summary>Is my file uploaded anywhere?</summary><p>No. The check runs in your browser and the file never leaves your device.</p></details>
+    <details><summary>Which formats work?</summary><p>SRT, WebVTT and ASS/SSA can be loaded.</p></details>
+  </section>
+  <section class="prose"><p>Related: <a href="./">Subtitle shifter, framerate and drift fixer</a>, <a href="split-subtitle-file.html">split a subtitle file</a>, <a href="merge-subtitle-files.html">merge two subtitle files</a>, <a href="rewrap-subtitle-lines.html">re-wrap long subtitle lines</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="cps.js"></script>
+</body>
+</html>

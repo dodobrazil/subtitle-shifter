@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Split a Subtitle File at a Time (SRT, VTT) - Free, Private</title>
+<meta name="description" content="Split an SRT or VTT subtitle file in two at a chosen time, for movies split into CD1 and CD2. Part 2 restarts at zero. Free, runs in your browser, no upload.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/split-subtitle-file.html">
+<link rel="stylesheet" href="app.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I split a subtitle file into two parts?","acceptedAnswer":{"@type":"Answer","text":"Enter the time where the first part ends (for example 47:12 or 2832 seconds) and press Split. Cues that start before that time go to part 1 and the rest go to part 2. Download both files."}},{"@type":"Question","name":"Why does part 2 start at zero?","acceptedAnswer":{"@type":"Answer","text":"If you split a film into two video files (CD1 and CD2), the second video starts from 0:00, so its subtitles must too. Part 2 is shifted back by the split time. Untick the option to keep the original timestamps."}},{"@type":"Question","name":"What happens to a cue that crosses the split time?","acceptedAnswer":{"@type":"Answer","text":"It stays in part 1 and its end is cut at the split time, so no line is lost or duplicated."}},{"@type":"Question","name":"How do I find the split time?","acceptedAnswer":{"@type":"Answer","text":"Use the point where the first video file ends, usually its total length shown in a media player. A small error is fine; check the last line of part 1 and the first line of part 2."}},{"@type":"Question","name":"Is my file uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Everything runs in your browser and the file never leaves your device."}},{"@type":"Question","name":"Which formats work?","acceptedAnswer":{"@type":"Answer","text":"SRT, WebVTT and ASS/SSA can be loaded. Both parts are written as SRT or VTT, matching the input (ASS becomes SRT), and styling is dropped."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>Split a Subtitle File at a Time</h1>
+  <p class="lead">Cut one SRT or VTT file into two parts, for a film that comes as two video files. Runs in your browser; your file is never uploaded. To join parts instead, use <a href="merge-subtitle-files.html">merge subtitle files</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Split subtitles</h2>
+    <div class="row">
+      <label>Split at (hh:mm:ss or seconds) <input type="text" id="at" value="" size="10" placeholder="47:12" inputmode="decimal"></label>
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+      <label><input type="checkbox" id="rebase" checked> Part 2 starts at 00:00:00</label>
+    </div>
+    <input type="file" id="file" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file">
+    <textarea id="input" rows="6" spellcheck="false" placeholder="Paste subtitles here, or choose a file above" aria-label="Subtitles"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="apply" class="primary">Split</button>
+      <button type="button" id="dl1">Download part 1</button>
+      <button type="button" id="dl2">Download part 2</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <h3>Part 1</h3>
+    <textarea id="out1" rows="6" readonly spellcheck="false" aria-label="Part 1"></textarea>
+    <h3>Part 2</h3>
+    <textarea id="out2" rows="6" readonly spellcheck="false" aria-label="Part 2"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to split a subtitle file</h2>
+    <ol>
+      <li>Load the subtitle file or paste it.</li>
+      <li>Enter the time where the first video file ends, for example <code>47:12</code> or <code>2832</code>.</li>
+      <li>Press Split and download both parts.</li>
+    </ol>
+    <p>Example: a cue at 00:50:00,000 with a split at 47:12 lands in part 2 at 00:02:48,000, because part 2 is moved back by 47 minutes 12 seconds.</p>
+    <p>Splitting is by the start time of each cue. A cue that crosses the split stays in part 1 and is cut at the split time.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>How do I split a subtitle file into two parts?</summary><p>Enter the time where the first part ends (for example 47:12 or 2832 seconds) and press Split. Cues that start before that time go to part 1 and the rest go to part 2. Download both files.</p></details>
+    <details><summary>Why does part 2 start at zero?</summary><p>If you split a film into two video files (CD1 and CD2), the second video starts from 0:00, so its subtitles must too. Part 2 is shifted back by the split time. Untick the option to keep the original timestamps.</p></details>
+    <details><summary>What happens to a cue that crosses the split time?</summary><p>It stays in part 1 and its end is cut at the split time, so no line is lost or duplicated.</p></details>
+    <details><summary>How do I find the split time?</summary><p>Use the point where the first video file ends, usually its total length shown in a media player. A small error is fine; check the last line of part 1 and the first line of part 2.</p></details>
+    <details><summary>Is my file uploaded anywhere?</summary><p>No. Everything runs in your browser and the file never leaves your device.</p></details>
+    <details><summary>Which formats work?</summary><p>SRT, WebVTT and ASS/SSA can be loaded. Both parts are written as SRT or VTT, matching the input (ASS becomes SRT), and styling is dropped.</p></details>
+  </section>
+  <section class="prose"><p>Related: <a href="./">Subtitle shifter, framerate and drift fixer</a>, <a href="merge-subtitle-files.html">merge two subtitle files</a>, <a href="srt-to-vtt-converter.html">SRT to VTT converter</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="split.js"></script>
+</body>
+</html>

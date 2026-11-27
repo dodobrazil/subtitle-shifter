@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subtitle Shifter &amp; Converter: ASS to SRT, SRT to VTT, Sync, Fix FPS - Free, Private</title>
+<meta name="description" content="Free subtitle toolkit: convert ASS, SRT and VTT, shift timing, fix drift with two reference points, fix framerate. Runs in your browser; files never leave your device.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="wrap">
+  <h1>Subtitle Shifter &amp; Converter</h1>
+  <p class="lead">Convert ASS, SRT and VTT, shift timings, fix framerate drift, remove overlaps and check reading speed. Everything runs in your browser; your files are never uploaded.</p>
+</header>
+
+<main class="wrap">
+  <section class="card" aria-labelledby="s1">
+    <h2 id="s1">1. Load subtitles</h2>
+    <div class="row">
+      <input type="file" id="file" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file">
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+      <button type="button" id="load">Load pasted text</button>
+      <button type="button" id="reset" class="ghost">Reset to original</button>
+    </div>
+    <textarea id="input" rows="8" spellcheck="false" placeholder="Paste SRT, WebVTT or ASS here, or choose a file above"></textarea>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <ul id="errors" class="issues"></ul>
+  </section>
+
+  <section class="card" aria-labelledby="s2">
+    <h2 id="s2">2. Edit</h2>
+    <div class="grid">
+      <fieldset>
+        <legend>Shift timing</legend>
+        <label>Milliseconds <input type="number" id="shiftMs" value="500" step="100"></label>
+        <div class="row">
+          <button type="button" id="shiftLater">Later (+)</button>
+          <button type="button" id="shiftEarlier">Earlier (-)</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Fix framerate</legend>
+        <label>Subtitle fps <input type="number" id="fpsFrom" value="23.976" step="any" min="1"></label>
+        <label>Video fps <input type="number" id="fpsTo" value="25" step="any" min="1"></label>
+        <button type="button" id="fpsApply">Apply</button>
+      </fieldset>
+      <fieldset class="wide">
+        <legend>Fix drift with two reference points</legend>
+        <p class="hint">Find one line near the start and one near the end. Enter when it appears now and when it should appear.</p>
+        <div class="row">
+          <label>Start line: now <input type="text" id="syncA1" value="00:01:00,000" size="12"></label>
+          <label>should be <input type="text" id="syncB1" value="00:01:02,000" size="12"></label>
+        </div>
+        <div class="row">
+          <label>End line: now <input type="text" id="syncA2" value="01:30:00,000" size="12"></label>
+          <label>should be <input type="text" id="syncB2" value="01:30:08,000" size="12"></label>
+          <button type="button" id="syncApply">Apply</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Fix overlaps</legend>
+        <label>Min gap (ms) <input type="number" id="gapMs" value="0" min="0" step="10"></label>
+        <button type="button" id="overlapApply">Sort and fix</button>
+      </fieldset>
+      <fieldset>
+        <legend>Check readability</legend>
+        <label>Max chars per line <input type="number" id="maxChars" value="42" min="1"></label>
+        <label>Max chars per second <input type="number" id="maxCps" value="21" min="1"></label>
+        <button type="button" id="check">Check</button>
+      </fieldset>
+      <fieldset class="wide">
+        <legend>Merge a second file</legend>
+        <div class="row">
+          <input type="file" id="file2" accept=".srt,.vtt,.txt,text/vtt,text/plain" aria-label="Second subtitle file">
+          <label>Offset for second file (ms) <input type="number" id="mergeOffset" value="0" step="100"></label>
+          <button type="button" id="mergeApply">Merge</button>
+        </div>
+      </fieldset>
+    </div>
+    <ul id="report" class="issues"></ul>
+  </section>
+
+  <section class="card" aria-labelledby="s3">
+    <h2 id="s3">3. Download</h2>
+    <div class="row">
+      <label>Format
+        <select id="format"><option value="srt">SRT</option><option value="vtt">WebVTT</option></select>
+      </label>
+      <button type="button" id="download" class="primary">Download</button>
+      <button type="button" id="copy" class="ghost">Copy</button>
+    </div>
+    <textarea id="output" rows="8" readonly spellcheck="false" aria-label="Result"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to use</h2>
+    <ol>
+      <li>Choose a .srt, .vtt, .ass or .ssa file, or paste the text, then press Load.</li>
+      <li>Apply one or more edits. Each one works on the result of the previous one.</li>
+      <li>Pick SRT or WebVTT and download. Use "Reset to original" to start over.</li>
+    </ol>
+  </section>
+
+  <section class="prose" aria-labelledby="drift">
+    <h2 id="drift">How to fix subtitle drift</h2>
+    <p>Drift means subtitles start in sync but slowly slide earlier or later as the video plays. A plain time shift cannot fix it, because the error grows.</p>
+    <ol>
+      <li>Play the video and note one dialogue line near the beginning: when it is spoken, and the time shown for it in the subtitle file.</li>
+      <li>Do the same for a line near the end. Wider spacing gives a more accurate result.</li>
+      <li>Enter the two pairs in "Fix drift with two reference points" and press Apply. Every cue is moved and stretched to fit both points.</li>
+    </ol>
+    <p>If you already know the two framerates (for example 23.976 and 25), "Fix framerate" does the same job without measuring anything. If the offset is constant, use Shift timing instead.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>Are my subtitle files uploaded anywhere?</summary>
+      <p>No. All processing happens in your browser with JavaScript. You can open your browser's network tab, or go offline after the page loads, and it keeps working.</p></details>
+    <details><summary>Why do accents or Cyrillic letters look broken?</summary>
+      <p>The file is probably not UTF-8. The tool detects UTF-8, UTF-16 and falls back to windows-1252. If characters still look wrong, pick the right Encoding next to the file chooser (for example windows-1251 for Russian, windows-1254 for Turkish, windows-1256 for Arabic). The text updates instantly.</p></details>
+    <details><summary>How do I fix subtitles that are out of sync?</summary>
+      <p>If they are off by a constant amount, use Shift timing with the number of milliseconds (1000 ms = 1 second). Use Later (+) if the subtitles appear too early, Earlier (-) if too late. If the drift grows over time, it is usually a framerate mismatch: use Fix framerate.</p></details>
+    <details><summary>Which framerate values should I use?</summary>
+      <p>Enter the framerate the subtitles were made for and the framerate of your video. A common case is subtitles made for 23.976 fps used with a 25 fps video. Times are multiplied by subtitle fps divided by video fps.</p></details>
+    <details><summary>How do I convert ASS or SSA subtitles to SRT?</summary>
+      <p>Load the .ass or .ssa file, then download it as SRT (or WebVTT). Each dialogue line becomes a plain text cue. Styling, colors, fonts, positioning and drawing effects are dropped, because SRT cannot store them, so karaoke and sign typesetting will not survive. Comment lines are ignored and line breaks are kept.</p></details>
+    <details><summary>Is there a dedicated SRT to VTT converter page?</summary>
+      <p>Yes: the <a href="srt-to-vtt-converter.html">SRT to VTT converter</a> does only the conversion, with step-by-step instructions.</p></details>
+    <details><summary>How do I remove [sound descriptions] and speaker names from subtitles?</summary>
+      <p>Use the <a href="remove-sdh-from-subtitles.html">SDH remover</a>: it strips [brackets], (parentheses), SPEAKER: labels and music lines and drops cues left empty.</p></details>
+    <details><summary>How do I turn an SRT file into plain text?</summary>
+      <p>Use the <a href="srt-to-txt-converter.html">SRT to TXT converter</a>: it removes cue numbers and timestamps and can join the text into paragraphs.</p></details>
+    <details><summary>What is the difference between SRT and WebVTT?</summary>
+      <p>SRT is the older, simpler format with numbered cues and comma milliseconds. WebVTT starts with a WEBVTT header, uses a dot for milliseconds and is the format used by HTML5 video. This tool converts either way; cue positioning settings are kept for VTT only.</p></details>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>Free, no sign-up, no tracking. Files stay on your device. Also: <a href="srt-to-vtt-converter.html">SRT to VTT converter</a>, <a href="remove-sdh-from-subtitles.html">remove SDH tags</a>, <a href="fix-subtitle-framerate.html">fix subtitle frame rate</a>, <a href="srt-to-txt-converter.html">SRT to TXT</a>, <a href="ass-to-srt-converter.html">ASS to SRT</a>, <a href="merge-subtitle-files.html">merge two subtitle files</a>, <a href="split-subtitle-file.html">split a subtitle file</a>, <a href="subtitle-reading-speed-checker.html">reading speed (CPS) checker</a>, <a href="rewrap-subtitle-lines.html">re-wrap long subtitle lines</a>.</p>
+</footer>
+
+<script src="subtitles.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

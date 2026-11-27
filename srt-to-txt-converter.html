@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SRT to TXT Converter (Subtitles to Plain Text) - Free, Private</title>
+<meta name="description" content="Convert SRT or VTT subtitles to plain text in your browser. Removes timestamps and numbers, optional paragraphs. Free, no upload, handles non-UTF-8 files.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/srt-to-txt-converter.html">
+<link rel="stylesheet" href="app.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I convert SRT to TXT?", "acceptedAnswer": {"@type": "Answer", "text": "Choose your .srt file or paste its text and press Download. The tool removes the cue numbers and timestamps and keeps only the spoken text. Nothing is uploaded."}}, {"@type": "Question", "name": "Can I keep the timestamps in the text file?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tick Add [hh:mm:ss] timestamps to put the start time of each cue in front of its line. This works in One line per cue layout."}}, {"@type": "Question", "name": "How do I get readable paragraphs instead of one line per subtitle?", "acceptedAnswer": {"@type": "Answer", "text": "Choose Paragraphs. Cues are joined into running text and a new paragraph starts whenever there is a pause longer than the gap you set (2 seconds by default)."}}, {"@type": "Question", "name": "What happens to italic tags and formatting codes?", "acceptedAnswer": {"@type": "Answer", "text": "HTML-style tags such as <i> and <c.yellow> and ASS codes such as {\\an8} are removed by default, so you get clean text. Untick Strip tags to keep them."}}, {"@type": "Question", "name": "Does it work with VTT, ASS and YouTube subtitles?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. WebVTT and ASS/SSA files are detected automatically. Auto-generated captions often repeat the same line in consecutive cues; Remove repeated lines drops those duplicates."}}, {"@type": "Question", "name": "Are my files uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. The extraction runs in your browser with JavaScript and your file never leaves your device."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>SRT to TXT Converter</h1>
+  <p class="lead">Turn SRT, WebVTT or ASS subtitles into a plain text transcript: no numbers, no timestamps. Runs in your browser; your file is never uploaded. Need to fix timing instead? Use the <a href="./">subtitle shifter</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Extract text</h2>
+    <div class="row">
+      <input type="file" id="file" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file">
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+      <label>Layout <select id="mode"><option value="lines">One line per cue</option><option value="paragraphs">Paragraphs</option></select></label>
+      <label>Paragraph gap (s) <input type="number" id="gap" value="2" min="0" step="0.5" style="width:5em"></label>
+    </div>
+    <div class="row">
+      <label><input type="checkbox" id="timestamps"> Add [hh:mm:ss] timestamps</label>
+      <label><input type="checkbox" id="tags" checked> Strip tags</label>
+      <label><input type="checkbox" id="dedupe" checked> Remove repeated lines</label>
+    </div>
+    <textarea id="input" rows="8" spellcheck="false" placeholder="Paste SRT, WebVTT or ASS here, or choose a file above" aria-label="Input"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="extract">Extract text</button>
+      <button type="button" id="download" class="primary">Download .txt</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <textarea id="output" rows="8" readonly spellcheck="false" aria-label="Result"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to convert SRT to TXT</h2>
+    <ol>
+      <li>Choose your .srt file, or paste the subtitle text into the box.</li>
+      <li>Pick One line per cue (each subtitle on its own line) or Paragraphs (running text split at pauses).</li>
+      <li>Press Download .txt. The file keeps the original name with a .txt extension.</li>
+    </ol>
+    <p>An SRT file is plain text already, but every subtitle is wrapped in a counter and a time range such as <code>00:00:01,000 --&gt; 00:00:03,500</code>. This tool removes that structure and joins two-line subtitles back into single lines, which is what you want for transcripts, translation, study notes or pasting into a document.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>How do I convert SRT to TXT?</summary><p>Choose your .srt file or paste its text and press Download. The tool removes the cue numbers and timestamps and keeps only the spoken text. Nothing is uploaded.</p></details>
+    <details><summary>Can I keep the timestamps in the text file?</summary><p>Yes. Tick Add [hh:mm:ss] timestamps to put the start time of each cue in front of its line. This works in One line per cue layout.</p></details>
+    <details><summary>How do I get readable paragraphs instead of one line per subtitle?</summary><p>Choose Paragraphs. Cues are joined into running text and a new paragraph starts whenever there is a pause longer than the gap you set (2 seconds by default).</p></details>
+    <details><summary>What happens to italic tags and formatting codes?</summary><p>HTML-style tags such as &lt;i&gt; and &lt;c.yellow&gt; and ASS codes such as {\an8} are removed by default, so you get clean text. Untick Strip tags to keep them.</p></details>
+    <details><summary>Does it work with VTT, ASS and YouTube subtitles?</summary><p>Yes. WebVTT and ASS/SSA files are detected automatically. Auto-generated captions often repeat the same line in consecutive cues; Remove repeated lines drops those duplicates.</p></details>
+    <details><summary>Are my files uploaded?</summary><p>No. The extraction runs in your browser with JavaScript and your file never leaves your device.</p></details>
+  </section>
+  <section class="prose"><p>Related: <a href="./">Subtitle shifter, framerate and drift fixer</a>, <a href="srt-to-vtt-converter.html">SRT to VTT converter</a>, <a href="remove-sdh-from-subtitles.html">remove SDH tags</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="totext.js"></script>
+</body>
+</html>

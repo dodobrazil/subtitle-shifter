@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SRT to VTT Converter (and VTT to SRT, ASS to SRT) - Free, Private</title>
+<meta name="description" content="Convert SRT to VTT, VTT to SRT or ASS to SRT in your browser. Free, no upload, handles non-UTF-8 files. Step-by-step instructions included.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/srt-to-vtt-converter.html">
+<link rel="stylesheet" href="app.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I convert SRT to VTT?", "acceptedAnswer": {"@type": "Answer", "text": "Choose your .srt file or paste its text, keep the target on Auto (SRT becomes WebVTT), and press Download. The tool adds the WEBVTT header and changes the comma in each timestamp to a dot. Nothing is uploaded."}}, {"@type": "Question", "name": "How do I convert VTT to SRT?", "acceptedAnswer": {"@type": "Answer", "text": "Load the .vtt file with the target on Auto or set to SRT. The WEBVTT header is removed, cues are numbered and dots in timestamps become commas. Cue settings such as align or position cannot be stored in SRT and are dropped."}}, {"@type": "Question", "name": "Can it convert ASS or SSA to SRT?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Load the .ass or .ssa file; each dialogue line becomes a plain text cue. Styling, colors, fonts and positioning are dropped because SRT cannot hold them."}}, {"@type": "Question", "name": "Why do accented letters look wrong after converting?", "acceptedAnswer": {"@type": "Answer", "text": "The source file is probably not UTF-8. Choose the matching Encoding (for example windows-1251 for Russian or windows-1254 for Turkish) before converting; the output is always UTF-8."}}, {"@type": "Question", "name": "Are my files uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. The conversion runs in your browser with JavaScript and your file never leaves your device."}}, {"@type": "Question", "name": "Which format should I use for HTML5 video?", "acceptedAnswer": {"@type": "Answer", "text": "The HTML5 track element expects WebVTT (.vtt). Most desktop players and many video sites accept SRT. If you need to fix timing first, use the main subtitle shifter."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>SRT to VTT Converter</h1>
+  <p class="lead">Convert SRT to WebVTT, WebVTT to SRT, or ASS/SSA to SRT. Runs in your browser; your file is never uploaded. Need to fix timing too? Use the <a href="./">subtitle shifter</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Convert</h2>
+    <div class="row">
+      <input type="file" id="file" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file">
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+      <label>Convert to <select id="target"><option value="auto">Auto (SRT&#8596;VTT)</option><option value="vtt">WebVTT (.vtt)</option><option value="srt">SRT (.srt)</option></select></label>
+    </div>
+    <textarea id="input" rows="8" spellcheck="false" placeholder="Paste SRT, WebVTT or ASS here, or choose a file above" aria-label="Input"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="convert">Convert</button>
+      <button type="button" id="download" class="primary">Download</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <textarea id="output" rows="8" readonly spellcheck="false" aria-label="Result"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to convert SRT to VTT</h2>
+    <ol>
+      <li>Choose your .srt file, or paste the subtitle text into the box.</li>
+      <li>Leave "Convert to" on Auto (an SRT file becomes WebVTT, a VTT file becomes SRT), or pick the format you want.</li>
+      <li>Press Download. The file keeps the original name with the new extension.</li>
+    </ol>
+    <p>What changes: WebVTT starts with a <code>WEBVTT</code> header and uses a dot before the milliseconds (<code>00:00:01.000</code>), while SRT numbers each cue and uses a comma (<code>00:00:01,000</code>). Text and timing stay the same.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>How do I convert SRT to VTT?</summary><p>Choose your .srt file or paste its text, keep the target on Auto (SRT becomes WebVTT), and press Download. The tool adds the WEBVTT header and changes the comma in each timestamp to a dot. Nothing is uploaded.</p></details>
+    <details><summary>How do I convert VTT to SRT?</summary><p>Load the .vtt file with the target on Auto or set to SRT. The WEBVTT header is removed, cues are numbered and dots in timestamps become commas. Cue settings such as align or position cannot be stored in SRT and are dropped.</p></details>
+    <details><summary>Can it convert ASS or SSA to SRT?</summary><p>Yes. Load the .ass or .ssa file; each dialogue line becomes a plain text cue. Styling, colors, fonts and positioning are dropped because SRT cannot hold them.</p></details>
+    <details><summary>Why do accented letters look wrong after converting?</summary><p>The source file is probably not UTF-8. Choose the matching Encoding (for example windows-1251 for Russian or windows-1254 for Turkish) before converting; the output is always UTF-8.</p></details>
+    <details><summary>Are my files uploaded?</summary><p>No. The conversion runs in your browser with JavaScript and your file never leaves your device.</p></details>
+    <details><summary>Which format should I use for HTML5 video?</summary><p>The HTML5 track element expects WebVTT (.vtt). Most desktop players and many video sites accept SRT. If you need to fix timing first, use the main subtitle shifter.</p></details>
+    </section>
+  <section class="prose"><p>Related: <a href="ass-to-srt-converter.html">ASS to SRT converter</a>, <a href="./">Subtitle shifter, framerate and drift fixer</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="convert.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merge Two Subtitle Files (Dual Language or Join Parts) - Free, Private</title>
+<meta name="description" content="Merge two SRT or VTT subtitle files: stack two languages in one file, or join part 1 and part 2 with a time offset. Free, runs in your browser, no upload.">
+<link rel="canonical" href="https://dodobrazil.github.io/subtitle-shifter/merge-subtitle-files.html">
+<link rel="stylesheet" href="app.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I combine two subtitle files into dual-language subtitles?","acceptedAnswer":{"@type":"Answer","text":"Load the first language as file A and the second as file B, choose Dual language and press Merge. Each line of B is placed under the A cue it overlaps in time, so both languages show together. A keeps its timing. Download the result as SRT or VTT."}},{"@type":"Question","name":"How do I join two parts of a movie subtitle (CD1 and CD2)?","acceptedAnswer":{"@type":"Answer","text":"Choose Append and enter the length of part 1 in seconds as the offset for file B (for example 3600 for one hour). All cues of B are moved later by that amount and added after A."}},{"@type":"Question","name":"The two languages do not line up. What can I do?","acceptedAnswer":{"@type":"Answer","text":"Both files must come from the same cut of the video. If B is shifted by a constant amount, enter that in seconds as the offset (negative values move B earlier). If the gap grows over time, fix the frame rate or drift of B first with the other tools on this site, then merge."}},{"@type":"Question","name":"What happens to cues with no partner?","acceptedAnswer":{"@type":"Answer","text":"By default they are kept as separate cues so no dialogue is lost. Untick the option to drop B cues that overlap no A cue."}},{"@type":"Question","name":"Is my file uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Everything runs in your browser and the files never leave your device."}},{"@type":"Question","name":"Which formats work?","acceptedAnswer":{"@type":"Answer","text":"SRT, WebVTT and ASS/SSA can be loaded. The result uses the format of file A (ASS becomes SRT) and styling is dropped."}}]}</script>
+</head>
+<body>
+<header class="wrap">
+  <h1>Merge Two Subtitle Files</h1>
+  <p class="lead">Put two languages in one SRT or VTT, or join two parts of a film with a time offset. Runs in your browser; your files are never uploaded. Need to fix timing first? Use the <a href="./">subtitle shifter</a>.</p>
+</header>
+<main class="wrap">
+  <section class="card" aria-labelledby="c1">
+    <h2 id="c1">Merge subtitles</h2>
+    <div class="row">
+      <label>Mode <select id="mode"><option value="dual">Dual language (stack B under A)</option><option value="append">Append (B after A)</option></select></label>
+      <label>Encoding <select id="encoding"><option value="auto">Auto-detect</option></select></label>
+      <label>Offset for B (seconds) <input type="text" id="offset" value="0" size="7" inputmode="decimal"></label>
+    </div>
+    <div class="row" id="dualOpts">
+      <label>Order <select id="order"><option value="a-first">A on top, B below</option><option value="b-first">B on top, A below</option></select></label>
+      <label><input type="checkbox" id="keep" checked> Keep B cues with no partner</label>
+    </div>
+    <h3>File A (its timing is kept)</h3>
+    <input type="file" id="fileA" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file A">
+    <textarea id="inputA" rows="6" spellcheck="false" placeholder="Paste file A here, or choose a file above" aria-label="File A"></textarea>
+    <h3>File B</h3>
+    <input type="file" id="fileB" accept=".srt,.vtt,.ass,.ssa,.txt,text/vtt,text/plain" aria-label="Subtitle file B">
+    <textarea id="inputB" rows="6" spellcheck="false" placeholder="Paste file B here, or choose a file above" aria-label="File B"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="apply">Merge</button>
+      <button type="button" id="download" class="primary">Download</button>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <textarea id="output" rows="8" readonly spellcheck="false" aria-label="Result"></textarea>
+  </section>
+
+  <section class="prose" aria-labelledby="how">
+    <h2 id="how">How to merge two subtitle files</h2>
+    <h3>Dual-language subtitles</h3>
+    <ol>
+      <li>Load the first language as file A and the second as file B. Both must match the same video cut.</li>
+      <li>Keep mode on Dual language and press Merge.</li>
+      <li>Check the result and Download. Each A cue now holds its own text plus the B text that overlaps it.</li>
+    </ol>
+    <p>Example: A has <code>Hello</code> at 00:00:01,000 to 00:00:03,000 and B has <code>Hola</code> at 00:00:01,100 to 00:00:02,900. The merged cue shows <code>Hello</code> on the first line and <code>Hola</code> on the second.</p>
+    <h3>Join two parts (CD1 + CD2)</h3>
+    <p>Choose Append and set the offset for B to the length of part 1 in seconds. Example: part 1 runs 47 minutes 12 seconds, so enter <code>2832</code>.</p>
+    <p>Pairing uses overlap in time, so lines can pair up unevenly when the two translations split sentences differently. Skim the result before using it.</p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details><summary>How do I combine two subtitle files into dual-language subtitles?</summary><p>Load the first language as file A and the second as file B, choose Dual language and press Merge. Each line of B is placed under the A cue it overlaps in time, so both languages show together. A keeps its timing. Download the result as SRT or VTT.</p></details>
+    <details><summary>How do I join two parts of a movie subtitle (CD1 and CD2)?</summary><p>Choose Append and enter the length of part 1 in seconds as the offset for file B (for example 3600 for one hour). All cues of B are moved later by that amount and added after A.</p></details>
+    <details><summary>The two languages do not line up. What can I do?</summary><p>Both files must come from the same cut of the video. If B is shifted by a constant amount, enter that in seconds as the offset (negative values move B earlier). If the gap grows over time, fix the frame rate or drift of B first with the other tools on this site, then merge.</p></details>
+    <details><summary>What happens to cues with no partner?</summary><p>By default they are kept as separate cues so no dialogue is lost. Untick the option to drop B cues that overlap no A cue.</p></details>
+    <details><summary>Is my file uploaded anywhere?</summary><p>No. Everything runs in your browser and the files never leave your device.</p></details>
+    <details><summary>Which formats work?</summary><p>SRT, WebVTT and ASS/SSA can be loaded. The result uses the format of file A (ASS becomes SRT) and styling is dropped.</p></details>
+  </section>
+  <section class="prose"><p>Related: <a href="./">Subtitle shifter, framerate and drift fixer</a>, <a href="srt-to-vtt-converter.html">SRT to VTT converter</a>, <a href="fix-subtitle-framerate.html">fix subtitle frame rate</a>.</p></section>
+</main>
+<footer class="wrap foot"><p>Free, no sign-up, no tracking. Files stay on your device.</p></footer>
+<script src="subtitles.js"></script>
+<script src="merge.js"></script>
+</body>
+</html>
